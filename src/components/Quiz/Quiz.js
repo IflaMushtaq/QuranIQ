@@ -4,6 +4,7 @@ import { resultInitialState } from '../questions/Constants';
 import AnswerTimer from '../AnswerTimer/AnswerTimer';
 import './QuizStyle.css';
 
+
 const Quiz=({questions})=> {
   const [currentQuestion, setCurrentQuestion]=useState(0);
   const {question, choices, correctAnswer}=questions[currentQuestion];
@@ -49,18 +50,23 @@ const Quiz=({questions})=> {
   }
 
   return (
-    <div>
+    <div className='quiz-container'>
+      <h1 className='quiz-title' style={{fontSize:"3rem"}}>QuranIQ</h1>
+      <div className='quiz-box mb-3'>
+      
       {!showResult?(
         <>
         <AnswerTimer/>
-        <span>
-          {currentQuestion+1}
-        </span>
-        <span>
-          /{questions.length}
-        </span>
-        <h2>{question}</h2>
-        <ul>
+        <div className='text-warning text-weight-bold'>
+          <span>
+            {currentQuestion+1}
+          </span>
+          <span>
+            /{questions.length}
+          </span>
+        </div>
+        <h4 className='text-white'>{question}</h4>
+        <ul className='p-0'>
           {
             choices.map((answer, index)=>(
               <li
@@ -96,6 +102,7 @@ const Quiz=({questions})=> {
         <button onClick={tryAgain}>Try Again</button>
       </div>}
       
+      </div>
     </div>
   )
 }

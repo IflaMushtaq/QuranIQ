@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Quiz from './components/Quiz/Quiz';
-import { Constants } from './questions/Constants';
+import { Constants } from './components/questions/Constants';
 
 function App() {
   return (
