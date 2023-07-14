@@ -1,0 +1,15 @@
+.timer-line {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-bottom: 1px solid yellow;
+  }
+  
+  .progress {
+    height: 5px;
+    transition-duration: 2s;
+    transition-timing-function: linear;
+    width: 50%;
+    background-color: red;
+  }
