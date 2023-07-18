@@ -21,7 +21,7 @@ li:hover{
 .quiz-container{
     background-image: linear-gradient(45deg,
     rgba(0, 0,0, 0.99),
-    rgba(0,0,0,0)), url("../../images/background.jpg");
+    rgba(0,0,0,0)), url("/src/images/background.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 100vh;
@@ -69,7 +69,7 @@ li:hover{
 @media only screen and (max-width: 600px) {
     .quiz-container{
         background-image: linear-gradient(90deg, rgba(0,0,0,0.7),
-        rgba(0, 0,0, 0.7)), url("../../images/background-mobile.jpg");
+        rgba(0, 0,0, 0.7)), url("/src/images/background-mobile.jpg");
     }
     .quiz-title{
         left:7.5rem;

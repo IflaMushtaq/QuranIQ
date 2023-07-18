@@ -53,10 +53,6 @@ const Quiz=({questions})=> {
           }
     );
   
-    if (!finalAnswer) {
-      console.log("Incorrect");
-    }
-  
     if (currentQuestion !== questions.length - 1) {
       setCurrentQuestion((prev) => prev + 1);
     } else {
@@ -144,7 +140,7 @@ const Quiz=({questions})=> {
       </StyleRoot>
       <div className=' fixed-bottom'>
         <p className='m-2 copyright'>
-          Made with <i class="fa-solid fa-heart text-red" style={{color: 'red'}}></i> by
+          Made with <i className="fa-solid fa-heart text-red" style={{color: 'red'}}></i> by
           Ifla Mushtaq
         </p>
       </div>
