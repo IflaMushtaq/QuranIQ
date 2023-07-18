@@ -88,7 +88,7 @@ const Quiz=({questions})=> {
             {!showResult ? (
               <>
                 <div className='text-warning text-weight-bold mb-3' style={{borderTopLeftRadius: '5px', borderTopRightRadius:'5px'}}>
-                {showAnswerTimer && <AnswerTimer duration={5} onTimeUp={handleTimeUp} />}
+                {showAnswerTimer && <AnswerTimer duration={15} onTimeUp={handleTimeUp} />}
                   <span>
                     {currentQuestion + 1}
                   </span>
