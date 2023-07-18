@@ -19,7 +19,6 @@ function AnswerTimer({duration, onTimeUp}) {
     setProgressLoader(100*(counter/duration));
     if(counter===duration){
       clearInterval(intervalRef.current);
-
       setTimeout(() => {
         onTimeUp();
       }, 1000);

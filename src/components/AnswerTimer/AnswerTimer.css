@@ -6,9 +6,9 @@
   }
   
   .progress {
-    height: 5px;
-    transition-duration: 2s;
+    height: 4px;
+    transition-duration: 1s;
     transition-timing-function: linear;
-    width: 75%;
+    width: 100%;
     background-color: rgb(255,193,7);
   }

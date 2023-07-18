@@ -4,9 +4,11 @@ import { resultInitialState } from '../questions/Constants';
 import AnswerTimer from '../AnswerTimer/AnswerTimer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { bounce, slideInLeft } from "react-animations";
+import { slideInLeft } from "react-animations";
 import Radium, { StyleRoot } from "radium";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import './QuizStyle.css';
+import Confetti from '../Confetti';
 
 
 const Quiz=({questions})=> {
@@ -15,25 +17,16 @@ const Quiz=({questions})=> {
     slideInLeft: {
       animation: 'x 1.5s',
       animationName: Radium.keyframes(slideInLeft, 'slideInLeft'), 
-    },
-    bounce: {
-      animation: "x 1s",
-      animationName: Radium.keyframes(bounce, "bounce"),
-    },
-  };
-
-  const stylesHead = {
-    fontSize: "3rem",
-    ...styles.slideInDown,
+    }
   };
 
   const [currentQuestion, setCurrentQuestion]=useState(0);
   const {question, choices, correctAnswer}=questions[currentQuestion];
-
   const [answerIndex, setAnswerIndex]=useState(null);
   const [answer, setAnswer]=useState(null);
   const [result, setResult]=useState(resultInitialState);
   const [showResult, setShowResult]=useState(false);
+  const [showAnswerTimer, setShowAnswerTimer]=useState(true);
 
   const onAnswerClick=(answer, index)=>{
     setAnswerIndex(index)
@@ -44,43 +37,54 @@ const Quiz=({questions})=> {
     }
   }
 
-  const onClickNext=(finalAnswer)=>{
+  const onClickNext = (finalAnswer) => {
     setAnswerIndex(null);
-    setResult((prev)=>
-    finalAnswer?{
-        ...prev,
-        score:prev.score+5,
-        correctAnswers:prev.correctAnswers+1
-      }:{
-        ...prev,
-        wrongAnswers:prev.wrongAnswers+1
-      }
+    setShowAnswerTimer(false);
+    setResult((prev) =>
+      finalAnswer
+        ? {
+            ...prev,
+            score: prev.score + 5,
+            correctAnswers: prev.correctAnswers + 1,
+          }
+        : {
+            ...prev,
+            wrongAnswers: prev.wrongAnswers + 1,
+          }
     );
-
+  
     if (!finalAnswer) {
       console.log("Incorrect");
     }
-
-    if(currentQuestion!==questions.length-1){
-      setCurrentQuestion((prev)=>prev+1);
-    }else{
+  
+    if (currentQuestion !== questions.length - 1) {
+      setCurrentQuestion((prev) => prev + 1);
+    } else {
       setCurrentQuestion(0);
       setShowResult(true);
     }
-  }
+  
+    setTimeout(() => {
+      setShowAnswerTimer(true);
+      setAnswer(null); 
+    });
+  };
 
   const tryAgain=()=>{
     setResult(resultInitialState)
     setShowResult(false)
   }
 
-  const handleTimeUp=()=>{
-    setAnswer(false)
-    onClickNext(false)
+  const handleTimeUp = () => {
+    if (answerIndex === null) {
+      setAnswer(false);
+    }
+    onClickNext(answer !== null ? answer : false); 
   };
 
   return (
     <div className='quiz-container'>
+      {result.score===50 && <Confetti/>}
       <StyleRoot>
         <div style={styles.slideInLeft}>
         <h1 className='quiz-title'>QuranIQ</h1>
@@ -88,7 +92,7 @@ const Quiz=({questions})=> {
             {!showResult ? (
               <>
                 <div className='text-warning text-weight-bold mb-3' style={{borderTopLeftRadius: '5px', borderTopRightRadius:'5px'}}>
-                <AnswerTimer duration={10} onTimeUp={handleTimeUp} />
+                {showAnswerTimer && <AnswerTimer duration={5} onTimeUp={handleTimeUp} />}
                   <span>
                     {currentQuestion + 1}
                   </span>
@@ -113,7 +117,8 @@ const Quiz=({questions})=> {
               </>
             ) : (
               <div className='text-center mt-5 text-light quiz-p'>
-                <h2 >Score: &nbsp;<span className='text-warning'>{result.score}</span></h2>
+                
+                <h2 >Score: &nbsp;<span className='text-warning'>{result.score}/50</span></h2>
                 <hr className='mb-5' />
                 <p>
                   Total Questions: &nbsp;<span className='text-warning'>{questions.length}</span>
@@ -122,7 +127,7 @@ const Quiz=({questions})=> {
                   Correct Answers: &nbsp;<span className='text-warning'>{result.correctAnswers}</span>
                 </p>
                 <p>
-                  Wrong Answers: &nbsp;<span className='text-warning'>{result.wrongAnswers}</span>
+                  Wrong/Unattempted Answers: &nbsp;<span className='text-warning'>{result.wrongAnswers}</span>
                 </p>
                 <button className='btn btn-warning mt-5' style={{fontFamily: "Georgia" }} onClick={tryAgain}>Try Again &nbsp;  <FontAwesomeIcon icon={faRefresh} /></button>
               </div>
@@ -137,6 +142,12 @@ const Quiz=({questions})=> {
           </div>
         </div>
       </StyleRoot>
+      <div className=' fixed-bottom'>
+        <p className='m-2 copyright'>
+          Made with <i class="fa-solid fa-heart text-red" style={{color: 'red'}}></i> by
+          Ifla Mushtaq
+        </p>
+      </div>
     </div>
   )
 }

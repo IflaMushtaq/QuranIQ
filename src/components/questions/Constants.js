@@ -83,7 +83,6 @@ export const Constants = {
     ]
 }
 
-
 export const resultInitialState={
   score:0,
   correctAnswers:0,
